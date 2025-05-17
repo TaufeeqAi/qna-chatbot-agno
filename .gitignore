@@ -1,2 +1,5 @@
 venv/
 .env
+backend/logs/
+research_assistant.egg-info/
+logs/

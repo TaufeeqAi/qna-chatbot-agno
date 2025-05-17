@@ -1,4 +1,6 @@
 from pydantic import BaseSettings
+import os
+from pathlib import Path
 
 class Settings(BaseSettings):
     DATABASE_URL: str
