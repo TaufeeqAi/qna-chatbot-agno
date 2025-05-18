@@ -11,7 +11,7 @@ class AppException(Exception):
         super().__init__(self.error_message)
 
     @staticmethod
-    def get_detailed_error_message(message, error_detail):
+    def get_detailed_error_message(message, error_detail): 
         _, _, exc_tb = sys.exc_info()
         if exc_tb:
             frame = exc_tb.tb_frame

@@ -1,11 +1,16 @@
 from fastapi import FastAPI
 import os
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException
 from common.logger import setup_logging
 from common.exception import AppException
 import logging
 
+from fastapi.middleware.cors import CORSMiddleware
+from .core.config import get_settings
+from .api import auth, chat, pdf_ingest,memory
+
+
+settings = get_settings()
 
 # Initialize logging at startup
 setup_logging(service_name="backend")
@@ -24,30 +29,33 @@ print(f"Root path: {project_root}")
 print(f".env path: {env_path}")
 print("======================")
 
-app = FastAPI()
+app = FastAPI(title="Research Chatbot API")
 
 
 @app.on_event("startup")
 def on_startup():
     logger.info("Application startup: FastAPI is starting up.")
 
+# CORS (if needed)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Mount routers
+app.include_router(auth.router)
+app.include_router(chat.router)
+app.include_router(memory.router)
+app.include_router(pdf_ingest.router)
+
 @app.get("/")
 def root():
     try:
         logger.info("Received request at root endpoint.")
-        return {"message": "Hello, World!"}
+        return {"message": "API is up and running!"}
     except Exception as e:
         # Wrap unexpected errors in CustomException
         raise AppException("Failed to handle root endpoint", e)
 
-@app.get("/error-test")
-def error_test():
-    try:
-        # Simulate an error
-        1 / 0
-    except Exception as e:
-        logger.error(f"Division by zero occurred: {e}",exc_info=True)
-        raise AppException("Division by zero occurred", e)
-
-
-print("DB UR:", os.getenv("DATABASE_URL"))

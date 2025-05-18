@@ -15,7 +15,7 @@ def setup_logging(service_name: str = "app", log_dir: str = None, level: int = l
     service_log_dir = base_log_dir / service_name
     service_log_dir.mkdir(parents=True, exist_ok=True)
 
-    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    timestamp = datetime.now().strftime("%Y-%m-%d")
     log_file = service_log_dir / f"{service_name}_{timestamp}.log"
 
     handler = RotatingFileHandler(
