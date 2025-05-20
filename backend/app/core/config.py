@@ -9,6 +9,11 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
     VECTOR_DB_URL: str = Field(..., env="VECTOR_DB_URL")
 
+    # OAuth
+    GOOGLE_CLIENT_ID: str = Field(..., env="GOOGLE_CLIENT_ID")
+    GOOGLE_CLIENT_SECRET: str = Field(..., env="GOOGLE_CLIENT_SECRET")
+
+
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"

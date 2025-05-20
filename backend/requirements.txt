@@ -6,8 +6,15 @@ SQLAlchemy
 psycopg2-binary
 python-dotenv
 python-jose
+httpx-oauth
 agate
 pinecone 
 PyPDF2
 groq
 agno
+arxiv
+beautifulsoup4
+requests
+reportlab
+flake8
+pytest
